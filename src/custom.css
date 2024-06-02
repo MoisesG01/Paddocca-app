@@ -5,3 +5,16 @@ body{padding-top:120px}pre{background:#f7f7f9}@media (min-width: 768px){body>.na
     margin-top: 10px;
     margin-bottom: 5px;
 }
+
+/* Custom CSS for Navbar */
+.navbar {
+    padding: 1rem;
+}
+
+.navbar .navbar-brand {
+    margin-right: auto;
+}
+
+.navbar-nav.ml-auto {
+    margin-left: auto;
+}

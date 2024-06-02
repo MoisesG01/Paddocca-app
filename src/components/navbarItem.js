@@ -1,16 +1,11 @@
 import React from "react";
 
-function NavBarItem( {render, ...props} ) {
-
-    if(render){
-        return (
-            <li className="nav-item">
-                <a onClick={props.onClick} className="nav-link" href={props.href}>{props.label}</a>
-            </li>
-        )
-    }else{
-        return false;
-    }
+function NavBarItem({ href, label }) {
+    return (
+        <li className="nav-item">
+            <a className="nav-link" href={href}>{label}</a>
+        </li>
+    );
 }
 
-export default NavBarItem
+export default NavBarItem;

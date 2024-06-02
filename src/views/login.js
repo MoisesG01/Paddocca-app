@@ -2,11 +2,9 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Card from '../components/card';
 import FormGroup from '../components/form-group';
-
 import UsuarioService from '../app/service/usuarioService';
 import LocalStorageService from '../app/service/localstorageService';
 import { mensagemErro } from '../components/toastr';
-
 import { AuthConsumer } from '../main/provedorAutenticacao'; 
 
 const Login = () => {
@@ -17,10 +15,7 @@ const Login = () => {
     const service = new UsuarioService();
 
     const entrar = (contexto) => { 
-        service.autenticar({
-            email: email,
-            senha: senha
-        }).then(response => {
+        service.autenticar({ email, senha }).then(response => {
             LocalStorageService.adicionarItem('_usuario_logado', response.data);
             contexto.iniciarSessao(response.data); 
             navigate('/home');
@@ -30,14 +25,14 @@ const Login = () => {
     };
 
     const prepareCadastrar = () => {
-        navigate('/cadastro-usuarios');
+        navigate('/tipo-perfil');
     };
 
     return (
         <AuthConsumer>
             {(contexto) => ( 
-                <div className="row">
-                    <div className='col-md-6' style={{ position: 'relative', left: '300px' }}>
+                <div className="d-flex justify-content-center align-items-center vh-100">
+                    <div className='col-md-6'>
                         <div className='bs-docs-section'>
                             <Card title="Login">
                                 <div className='row'>
@@ -45,33 +40,16 @@ const Login = () => {
                                         <div className='bs-component'>
                                             <fieldset>
                                                 <FormGroup label="Email: *" htmlFor="exampleInputEmail1">
-                                                    <input
-                                                        type='email'
-                                                        value={email}
-                                                        onChange={e => setEmail(e.target.value)}
-                                                        className='form-control'
-                                                        id='exampleInputEmail1'
-                                                        aria-describedby='emailHelp'
-                                                        placeholder='Digite o Email'
-                                                    />
+                                                    <input type='email' value={email} onChange={e => setEmail(e.target.value)} className='form-control' id='exampleInputEmail1' aria-describedby='emailHelp' placeholder='Digite o Email' />
                                                 </FormGroup>
                                                 <FormGroup label="Senha: *" htmlFor="exampleInputPassword1">
-                                                    <input
-                                                        type='password'
-                                                        value={senha}
-                                                        onChange={e => setSenha(e.target.value)}
-                                                        className='form-control'
-                                                        id='exampleInputPassword1'
-                                                        placeholder='Password'
-                                                    />
+                                                    <input type='password' value={senha} onChange={e => setSenha(e.target.value)} className='form-control' id='exampleInputPassword1' placeholder='Password' />
                                                 </FormGroup>
-                                                <button onClick={() => entrar(contexto)} 
-                                                        className='btn btn-success'>
-                                                        <i className="pi pi-sign-in"></i> Entrar
+                                                <button onClick={() => entrar(contexto)} className='btn btn-success'>
+                                                    <i className="pi pi-sign-in"></i> Entrar
                                                 </button>
-                                                <button onClick={prepareCadastrar} 
-                                                        className='btn btn-danger'>
-                                                        <i className="pi pi-plus"></i> Cadastrar
+                                                <button onClick={prepareCadastrar} className='btn btn-danger'>
+                                                    <i className="pi pi-plus"></i> Cadastrar
                                                 </button>
                                             </fieldset>
                                         </div>
