@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
-import UsuarioService from "../app/service/usuarioService";
+import EntregadorService from "../app/service/entregadorService";
 import { mensagemSucesso, mensagemErro } from "../components/toastr";
 
 const CadastroEntregador = () => {
@@ -16,7 +16,7 @@ const CadastroEntregador = () => {
     const [dataNascimento, setDataNascimento] = useState('');
 
     const navigate = useNavigate();
-    const service = new UsuarioService();
+    const service = new EntregadorService();
 
     const cadastrar = () => {
         if (!nome) {
@@ -52,10 +52,10 @@ const CadastroEntregador = () => {
             return;
         }
 
-        const usuario = { nome, email, senha, senhaRepeticao, cpf, endereco, telefone, dataNascimento };
+        const entregador = { nome, email, senha, senhaRepeticao, cpf, endereco, telefone, dataNascimento };
 
         try {
-            service.validar(usuario);
+            service.validar(entregador);
         } catch (erro) {
             if (erro && erro.mensagens) {
                 erro.mensagens.forEach(msg => mensagemErro(msg));
@@ -65,7 +65,7 @@ const CadastroEntregador = () => {
             return false;
         }
 
-        service.salvar(usuario)
+        service.salvar(entregador)
             .then(response => {
                 mensagemSucesso('Entregador Cadastrado com Sucesso!');
                 navigate('/login');

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
-import UsuarioService from "../app/service/usuarioService";
+import PadariaService from "../app/service/padariaService";
 import { mensagemSucesso, mensagemErro } from "../components/toastr";
 
 const CadastroPadaria = () => {
@@ -15,7 +15,7 @@ const CadastroPadaria = () => {
     const [telefone, setTelefone] = useState('');
 
     const navigate = useNavigate();
-    const service = new UsuarioService();
+    const service = new PadariaService();
 
     const cadastrar = () => {
         if (!nome) {
@@ -47,10 +47,10 @@ const CadastroPadaria = () => {
             return;
         }
 
-        const usuario = { nome, email, senha, senhaRepeticao, cnpj, endereco, telefone };
+        const padaria = { nome, email, senha, senhaRepeticao, cnpj, endereco, telefone };
 
         try {
-            service.validar(usuario);
+            service.validar(padaria);
         } catch (erro) {
             if (erro && erro.mensagens) {
                 erro.mensagens.forEach(msg => mensagemErro(msg));
@@ -60,7 +60,7 @@ const CadastroPadaria = () => {
             return false;
         }
 
-        service.salvar(usuario)
+        service.salvar(padaria)
             .then(response => {
                 mensagemSucesso('Padaria Cadastrada com Sucesso!');
                 navigate('/login');

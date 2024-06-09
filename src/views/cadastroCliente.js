@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from 'react-router-dom';
 import Card from "../components/card";
 import FormGroup from "../components/form-group";
-import UsuarioService from "../app/service/usuarioService";
+import ClienteService from "../app/service/clienteService";
 import { mensagemSucesso, mensagemErro } from "../components/toastr";
 
 const CadastroCliente = () => {
@@ -16,7 +16,7 @@ const CadastroCliente = () => {
     const [dataNascimento, setDataNascimento] = useState('');
 
     const navigate = useNavigate();
-    const service = new UsuarioService();
+    const service = new ClienteService();
 
     const cadastrar = () => {
         if (!nome) {
@@ -52,10 +52,10 @@ const CadastroCliente = () => {
             return;
         }
 
-        const usuario = { nome, email, senha, senhaRepeticao, cpf, endereco, telefone, dataNascimento };
+        const cliente = { nome, email, senha, senhaRepeticao, cpf, endereco, telefone, dataNascimento };
 
         try {
-            service.validar(usuario);
+            service.validar(cliente);
         } catch (erro) {
             if (erro && erro.mensagens) {
                 erro.mensagens.forEach(msg => mensagemErro(msg));
@@ -65,7 +65,7 @@ const CadastroCliente = () => {
             return false;
         }
 
-        service.salvar(usuario)
+        service.salvar(cliente)
             .then(response => {
                 mensagemSucesso('Cliente Cadastrado com Sucesso!');
                 navigate('/login');

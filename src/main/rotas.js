@@ -9,6 +9,8 @@ import TipoPerfil from "../views/TipoPerfil";
 import CadastroCliente from "../views/cadastroCliente";
 import CadastroEntregador from "../views/CadastroEntregador";
 import CadastroPadaria from "../views/CadastroPadaria";
+import EditarProduto from "../views/EditarProduto";
+import AdicionarProduto from "../views/AdicionarProduto";
 
 function RotaAutenticada({ children }) {
     let location = useLocation();
@@ -24,16 +26,15 @@ function Rotas() {
     return (
         <BrowserRouter>
             <Routes>
+                <Route path="home" element={<Home />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/cadastro-cliente" element={<CadastroCliente />} />
                 <Route path="/cadastro-entregador" element={<CadastroEntregador />} />
                 <Route path="/cadastro-padaria" element={<CadastroPadaria />} />
                 <Route path="/produtos" element={<Produtos />} />
                 <Route path="/tipo-perfil" element={<TipoPerfil />} />
-                
-                <Route path="/" element={<RotaAutenticada><Outlet /></RotaAutenticada>}>
-                    <Route path="home" element={<Home />} />
-                </Route>
+                <Route path="/editar-produto/:id" element={<EditarProduto />} />
+                <Route path="/adicionar-produto" element={<AdicionarProduto />} />
             </Routes>
         </BrowserRouter>
     );

@@ -4,15 +4,11 @@ import ErroValidacao from "../exception/ErroValidacao";
 
 class UsuarioService extends ApiService {
     constructor() {
-        super('/api/usuarios');
+        super('/usuarios');
     }
 
     autenticar(credenciais) {
         return this.post('/autenticar', credenciais);
-    }
-
-    obterSaldoPorUsuario(id) {
-        return this.get(`/${id}/saldo`);
     }
 
     salvar(usuario) {
