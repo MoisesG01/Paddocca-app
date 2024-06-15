@@ -6,15 +6,15 @@ class ProdutoService {
     }
 
     obterProdutos(pagina, itensPorPagina) {
-        return axios.get(`${this.apiurl}?pagina=${pagina}&itensPorPagina=${itensPorPagina}`);
+        return axios.get(`${this.apiurl}?page=${pagina}&size=${itensPorPagina}`);
     }
 
     criarProduto(produto) {
         return axios.post(this.apiurl, produto);
     }
 
-    atualizarProduto(produto) {
-        return axios.post(this.apiurl, produto);
+    atualizarProduto(id, produto) {
+        return axios.put(`${this.apiurl}/${id}`, produto);
     }
 
     deletarProduto(id) {

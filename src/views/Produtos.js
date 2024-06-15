@@ -5,32 +5,42 @@ import { useNavigate } from 'react-router-dom';
 
 const Produtos = () => {
   const [produtos, setProdutos] = useState([]);
+  const [paginaAtual, setPaginaAtual] = useState(0);
+  const [itensPorPagina] = useState(10);
+  const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
-  const produtoService = new ProdutoService(); // Instancie o serviço aqui
+  const produtoService = new ProdutoService();
 
   useEffect(() => {
-    produtoService.obterProdutos()
-     .then(response => {
-        setProdutos(response.data || []);
+    produtoService.obterProdutos(paginaAtual, itensPorPagina)
+      .then(response => {
+        setProdutos(response.data.content || []);
+        setTotalPages(response.data.totalPages);
       })
-     .catch(error => {
+      .catch(error => {
         mensagemErro(error.response?.data || 'Erro ao carregar produtos');
       });
-  }, []);
+  }, [paginaAtual, itensPorPagina]);
 
   const handleDelete = (id) => {
     produtoService.deletarProduto(id)
-     .then(response => {
+      .then(response => {
         mensagemSucesso('Produto deletado com sucesso!');
-        // Atualizar a lista de produtos após a deleção
-        produtoService.obterProdutos()
-         .then(response => {
-            setProdutos(response.data || []);
+        produtoService.obterProdutos(paginaAtual, itensPorPagina)
+          .then(response => {
+            setProdutos(response.data.content || []);
+            setTotalPages(response.data.totalPages);
           });
       })
-     .catch(error => {
+      .catch(error => {
         mensagemErro(error.response?.data || 'Erro ao deletar produto');
       });
+  };
+
+  const handlePaginaChange = (pagina) => {
+    if (pagina >= 0 && pagina < totalPages) {
+      setPaginaAtual(pagina);
+    }
   };
 
   return (
@@ -53,6 +63,21 @@ const Produtos = () => {
           </div>
         ))}
       </div>
+      <nav aria-label="Page navigation example">
+        <ul className="pagination">
+          <li className={`page-item ${paginaAtual === 0 ? 'disabled' : ''}`}>
+            <button className="page-link" onClick={() => handlePaginaChange(paginaAtual - 1)}>Anterior</button>
+          </li>
+          {[...Array(totalPages).keys()].map((pagina) => (
+            <li key={pagina} className={`page-item ${paginaAtual === pagina ? 'active' : ''}`}>
+              <button className="page-link" onClick={() => handlePaginaChange(pagina)}>{pagina + 1}</button>
+            </li>
+          ))}
+          <li className={`page-item ${paginaAtual === totalPages - 1 ? 'disabled' : ''}`}>
+            <button className="page-link" onClick={() => handlePaginaChange(paginaAtual + 1)}>Próximo</button>
+          </li>
+        </ul>
+      </nav>
     </div>
   );
 };

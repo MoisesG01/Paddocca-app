@@ -1,5 +1,3 @@
-// src/views/TipoPerfil.js
-
 import React from 'react';
 import { Link } from 'react-router-dom';
 
@@ -7,7 +5,7 @@ import { FaUser } from 'react-icons/fa';
 import { FaStore } from 'react-icons/fa';
 import { FaTruck } from 'react-icons/fa';
 
-import './TipoPerfil.css'; // Importando o arquivo CSS para estilização
+import './TipoPerfil.css'; 
 
 const TipoPerfil = () => {
     return (
